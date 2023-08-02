@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e583835301f2645ad87b4e3e9e7aad, type: 3}
+  m_Name: Boom
+  m_EditorClassIdentifier: 
+  itemName: "\uD3ED\uD0C4"
+  level: 1
+  stats:
+  - name: DMG
+    value: 5
+  maxStack: 3
+  price: 10
+  itemIcon: {fileID: 21300000, guid: 76f197df6aa74b34eb17347f4572479a, type: 3}
+  prefab: {fileID: 4843599621811084353, guid: 5ece67075076f4745b5f11cb5476e876, type: 3}
+  description: "\uC0C1\uB300\uC5D0\uAC8C 5\uC758 \uB370\uBBF8\uC9C0\uB97C \uC90D\uB2C8\uB2E4."

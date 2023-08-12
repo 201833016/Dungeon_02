@@ -6,11 +6,11 @@ using TMPro;
 
 public class TempUICardTxt : MonoBehaviour
 {
-    public CardSO cardSO;
+    public CardSO cardSO;   // 카드 정보
     public Image tempcardImage;    // 아이템 이미지
     public TMP_Text tempcardtitle;    // 아이템 이름
     public TMP_Text tempcarddescription;  // 아아템 설명
-    [field: SerializeField] public int Quantity { get; set; } = 1;
+
 
     private void Awake()
     {

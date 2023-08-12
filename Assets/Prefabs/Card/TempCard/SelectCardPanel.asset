@@ -17,4 +17,5 @@ MonoBehaviour:
   - card: {fileID: 11400000, guid: cfe276b60d14a1b4b9ae71f366fc1ff6, type: 2}
   - card: {fileID: 11400000, guid: 6fc8219c50661854fba55acb1a410c2a, type: 2}
   - card: {fileID: 11400000, guid: a40107404cdb8df48b4064b1986b5eb1, type: 2}
+  - card: {fileID: 11400000, guid: 4f73f4feb4b99c84cbad3783d6b49fc4, type: 2}
   <Size>k__BackingField: 3

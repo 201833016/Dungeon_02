@@ -12,11 +12,11 @@ namespace Inventory.Model
         
         public string actionName => "Consume";
         public AudioClip actionSFX { get; private set; }
-        public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+        public bool PerformAction(Health health, List<ItemParameter> itemState = null)
         {
             foreach(ModifierData data in modifierData)
             {
-                data.statModifier.AffectCharacter(character, data.value);
+                data.statModifier.AffectCharacter(health, data.value);
             }
             return true;
         }
@@ -32,7 +32,7 @@ namespace Inventory.Model
     {
         public string actionName {  get; }
         public AudioClip actionSFX { get; }
-        bool PerformAction(GameObject character, List<ItemParameter> itemState);
+        bool PerformAction(Health health, List<ItemParameter> itemState);
     }
 
     [Serializable] 

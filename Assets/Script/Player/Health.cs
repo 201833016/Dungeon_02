@@ -1,51 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.Events;
 
-
-public class Health : MonoBehaviour
+[CreateAssetMenu(fileName = "Player Heatlth", menuName = "Player/Health")]
+public class Health : ScriptableObject     // SO로 만들어서 Player 전용으로
 {
-    [SerializeField] private int currentHealth, maxHealth;    // 현재 체력,  최대 체력
-    //[SerializeField] private int currentHealth  = 10;   // 
+    public float maxHP;    //최대 체력
+    public float currentHP;   //  현재 체력
+    public float attack;  // 플레이어 공격력
+    public float defence; // 플레이어 방어력
+    public float speedMove;   // 이동 속도
+    public float speedAttack; // 공격 속도
+
     //[SerializeField] private GameObject bloodParticle;
 
     //[SerializeField] private Renderer renderer;
     //[SerializeField] private float flashTime = 0.2f;
 
-    public void AddHealth(int heal) // 회복 아이템 사용시
+    private void Awake()
     {
-        currentHealth += heal;
+        currentHP = maxHP;
     }
 
-    public void Reduce(int damage)  // 체력 감소 시
+
+    public void AddHP(float heal) // 회복 아이템 사용시
     {
-        currentHealth -= damage;
+        currentHP += heal;
+    }
+
+    public void AddMaxHealth(float item_HP)
+    {
+        maxHP += item_HP;
+    }
+
+    public void AddAttack(float item_Attack) // 공격력 증가 아이템 사용시
+    {
+        attack += item_Attack;
+    }
+
+    public void Reduce(float damage)  // 체력 감소 시
+    {
+        currentHP -= damage;
         //CreateHitFeedback();
-        if (currentHealth <= 0)
+        if (currentHP <= 0)
         {
             Die();
         }
     }
-/*
-    private void CreateHitFeedback()
-    {
-        Instantiate(bloodParticle, transform.position, Quaternion.identity);
-        StartCoroutine(FlashFeedback());
-    }
+    /*
+        private void CreateHitFeedback()
+        {
+            Instantiate(bloodParticle, transform.position, Quaternion.identity);
+            StartCoroutine(FlashFeedback());
+        }
 
-    private IEnumerator FlashFeedback()
-    {
-        renderer.material.SetInt("_Flash", 1);
-        yield return new WaitForSeconds(flashTime);
-        renderer.material.SetInt("_Flash", 0);
-    }
-    */
+        private IEnumerator FlashFeedback()
+        {
+            renderer.material.SetInt("_Flash", 1);
+            yield return new WaitForSeconds(flashTime);
+            renderer.material.SetInt("_Flash", 0);
+        }
+        */
 
     private void Die()
     {
         Debug.Log("Died");
-        currentHealth = maxHealth;
+        // Destroy(gameobject);
+        currentHP = maxHP;
     }
 }

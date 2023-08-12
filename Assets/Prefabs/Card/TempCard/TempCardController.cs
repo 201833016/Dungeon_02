@@ -35,7 +35,7 @@ public class TempCardController : MonoBehaviour
 
     private void PrepareSelectCardUI()  // 시작시 카드 선택할 갯수, 이벤트 생성
     {
-        cardUI.InitializeTempCardUI(selectData.Size);
+        cardUI.InitializeTempCardUI(selectData.Size);   
         this.cardUI.OnCardDataRequested += HandleCardDataRequest;   // 카드 선택한거 가져오기
     }
 
@@ -73,8 +73,6 @@ public class TempCardController : MonoBehaviour
                 cardUI.CardPageHide();
             }
         }
-
-
     }
 
     private List<T> ShuffleList<T>(List<T> _list)   // SO내의 카드 섞기

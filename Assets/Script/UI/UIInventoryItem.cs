@@ -21,32 +21,48 @@ namespace Inventory.UI
 
         private void Awake()
         {
-            ResetData();    // 인벤토리 정보 초기화
-            Deselect();     // 아이템 비 선택 시
+            this.itemImage.gameObject.SetActive(false); // 인벤토리의 item데이터가 없어지면 비활성화
+            //ResetData();    // 인벤토리 정보 초기화
+            //Deselect();     // 아이템 비 선택 시
         }
 
         public void ResetData() // 인벤토리 정보 초기화
         {
-            this.itemImage.gameObject.SetActive(false); // 인벤토리의 item데이터가 없어지면 비활성화
-            empty = true;
+            if (itemImage)
+            {
+                this.itemImage.gameObject.SetActive(false); // 인벤토리의 item데이터가 없어지면 비활성화
+                empty = true;
+            }
+
         }
 
         public void Deselect()  // 아이템 비 선택 시
         {
-            borderImage.enabled = false;
+            if (itemImage)
+            {
+                borderImage.enabled = false;
+            }
+            
         }
 
         public void SetData(Sprite sprite, int quantity)    // itemUI에 아이템 데이터 가져오기
         {
-            this.itemImage.gameObject.SetActive(true);
-            this.itemImage.sprite = sprite;
-            this.quantityTxt.text = quantity + "";
-            empty = false;
+            if (itemImage)
+            {
+                this.itemImage.gameObject.SetActive(true);
+                this.itemImage.sprite = sprite;
+                this.quantityTxt.text = quantity + "";
+                empty = false;
+            }            
         }
 
         public void Select()
         {
-            borderImage.enabled = true; // 아이템을 선택 클릭시, 선택 표시 가시화
+            if (itemImage)
+            {
+                borderImage.enabled = true; // 아이템을 선택 클릭시, 선택 표시 가시화
+            }
+            
         }
 
 

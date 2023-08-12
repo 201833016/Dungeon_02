@@ -5,14 +5,14 @@ using Inventory.Model;
 
 public class Item : MonoBehaviour
 {
-    [field: SerializeField] public ItemSO invenItem { get; private set; }
-    [field: SerializeField] public int Quantity { get; set; } = 1;
+    [field: SerializeField] public ItemSO invenItem { get; private set; }   // 아이템
+    [field: SerializeField] public int Quantity { get; set; } = 1;  // 아이템 기본 갯수
     [SerializeField] private AudioSource audioSource;   // 음원 파일
     [SerializeField] private float duration = 0.3f; // 소리, 아이템 지속 시간
     
     private void Start() 
     {
-        GetComponent<SpriteRenderer>().sprite = invenItem.itemSprite;    
+        GetComponent<SpriteRenderer>().sprite = invenItem.itemSprite;      // SO내의 저장된 이미지 가져오기
     }
 
     public void DestroyItem()

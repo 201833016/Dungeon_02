@@ -45,6 +45,6 @@ public class SOItemDropTable : ScriptableObject
         {
             return;
         }
-        Instantiate(item.prefab, pos, Quaternion.identity);
+        Instantiate(item.prefab, pos, Quaternion.identity);     // 위치에 아이템 드랍
     }
 }

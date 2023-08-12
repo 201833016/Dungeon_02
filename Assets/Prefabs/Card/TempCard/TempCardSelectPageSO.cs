@@ -11,7 +11,7 @@ public class TempCardSelectPageSO : ScriptableObject
     public event Action<Dictionary<int, CardSelect>> OnCardDeckUpdated; // 내부 대리자 선언, 카드 덱 현재 상태
 
 
-    public void InitializeTempCard()
+    public void InitializeTempCard()    // 카드 덱 초기화
     {
         cardSelects = new List<CardSelect>();
         for (int i = 0; i < Size; i++)

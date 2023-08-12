@@ -8,7 +8,7 @@ public class BlessCardController : MonoBehaviour
     public BlessCardPage bCardUI;   // 축복 카드 메뉴
 
     [SerializeField] private BlessCardInven cardData;   // 축복 카드 인벤토리 정보
-    [SerializeField] private InventoryController inventoryController;   // 메누에서 아이템 인벤을 닫기 위한 
+    [SerializeField] private InventoryController inventoryController;   // 메뉴에서 아이템 인벤을 닫기 위한 
 
     private void Start()
     {

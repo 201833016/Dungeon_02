@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlessCardInventory
   m_EditorClassIdentifier: 
   invenCards:
-  - card: {fileID: 11400000, guid: 98ebc0a337091904b9f5ed922975a58f, type: 2}
+  - card: {fileID: 0}
     quantity: 1
   - card: {fileID: 11400000, guid: 8b3d37969db00d34bb0543c77fad0e24, type: 2}
     quantity: 1

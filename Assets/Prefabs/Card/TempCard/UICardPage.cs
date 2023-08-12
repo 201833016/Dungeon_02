@@ -16,25 +16,25 @@ public class UICardPage : MonoBehaviour
 
     private void Awake()
     {
-        CardPageHide();
-        tempCardDesc.TempCardResetDescription();
+        CardPageHide(); // 카드 선택 페이지 숨기기
+        tempCardDesc.TempCardResetDescription();    // 선택한 카드 정보 숨기기
     }
 
-    public void InitializeTempCardUI(int invenCardSize)
+    public void InitializeTempCardUI(int invenCardSize)     // 선택 카드 초기화
     {
         for (int i = 0; i < invenCardSize; i++)
         {
             TempUICard uiTemp = Instantiate(cardPrefab, Vector3.zero, Quaternion.identity); // 선택한 카드 생성
-            uiTemp.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);    // 선택할 카드 크기 조절
+            uiTemp.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);    // 선택할 카드 크기 조절 [xyz비율 : 70%]
             uiTemp.transform.SetParent(contentPanel);   // 선택할 카드가 놓일 오브젝트
             listCard.Add(uiTemp);   // 선택할 카드의 리스트
 
-            uiTemp.OnItemClicked += HandleCardSelection;
-            uiTemp.OnRightMouseBtnClick += HandleShowItemActions;   // 우클릭시 아이템 액션효과
+            uiTemp.OnItemClicked += HandleCardSelection;    // 카드 클릭시 효과
+            uiTemp.OnRightMouseBtnClick += HandleShowItemActions;   // 우클릭시 카드 액션효과
         }
     }
 
-    private void HandleCardSelection(TempUICard card)
+    private void HandleCardSelection(TempUICard card)   // 카드 선택시 정보 주기
     {
         int index = listCard.IndexOf(card);
         if (index == -1)
@@ -63,13 +63,13 @@ public class UICardPage : MonoBehaviour
         TempResetSelection();
     }
 
-    private void TempResetSelection()
+    private void TempResetSelection()   // 카드 선택 상태 숨기기
     {
         tempCardDesc.TempCardResetDescription();
         TempDeselectAllCards();
     }
 
-    private void TempDeselectAllCards()
+    private void TempDeselectAllCards() // 카드 선택 효과 숨기기
     {
         foreach (TempUICard card in listCard)
         {
@@ -89,13 +89,5 @@ public class UICardPage : MonoBehaviour
         listCard[cardIndex].TempSelect();
 
         selectIndex = cardIndex;    // 카드 순서 번호 가져오기
-        if(cardName == "번개")
-        {
-            Debug.Log("번개를 가져옴");
-        }
-        else
-        {
-            Debug.Log("예상 빗나감");
-        }
     }
 }

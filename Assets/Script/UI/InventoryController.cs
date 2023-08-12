@@ -15,21 +15,22 @@ namespace Inventory
 
         public UIInventoryPage invenUI;   // 인벤토리 메뉴
         [SerializeField] private InventorySO inventorySO;   // 인벤토리 정보
-
         public List<InventoryItem> initialItems = new List<InventoryItem>();    // 인벤토리내 아이템 정보 리스트
 
         [SerializeField] private UIManager uiManager;   // uiManager 정보
         [SerializeField] private BlessCardController blessCardController;   // 축복 카드 인벤토리 스크립트
 
+
+
         private void Start()
         {
             PrePareUI();    // UI 세팅
-            //PrepareInventoryData();
+            PrepareInventoryData();
         }
 
         private void PrepareInventoryData() // 시작시 아무것도 없이 초기화 시키는 기능, 남김 없이 사라짐
         {
-            inventorySO.Initialize();   // 인벤토리 슬롯 생성
+            //inventorySO.Initialize();   // 인벤토리 슬롯 생성, 초기화 시키는 기능
             inventorySO.OnInventoryUpdated += UpdateInventoryUI;    // 인벤토리 현재 상태 초기화
             foreach (InventoryItem item in initialItems)
             {
@@ -70,6 +71,46 @@ namespace Inventory
             ItemSO itemSO = inventoryItem.item;
             string description = PrepareDescription(inventoryItem);
             invenUI.UpdateDescription(itemIndex, itemSO.itemSprite, itemSO.itemName, description);  // 아이템UI 정보 초기화
+            Debug.Log($"4.종류 : {itemSO.item_type}");
+            
+            switch (itemSO.item_type)
+            {
+                case "ATK":
+                    if (BuffManager.instance.onATK == true)    // 사용하여 시간이 돌아가면
+                    {
+                        BuffUseYN.instance.DEFEnabled(false);
+                        BuffUseYN.instance.ATKEnabled(true);
+                        
+                        uiManager.description_Button_Panel.SetActive(false);
+                    }
+                    else
+                    {
+                        BuffUseYN.instance.ATKEnabled(false);
+                        BuffUseYN.instance.DEFEnabled(false);
+                        uiManager.description_Button_Panel.SetActive(true);
+                    }
+                    break;
+                case "DEF":
+                    if (BuffManager.instance.onDEF == true)    // 사용하여 시간이 돌아가면
+                    {
+                        BuffUseYN.instance.ATKEnabled(false);
+                        BuffUseYN.instance.DEFEnabled(true);
+                        uiManager.description_Button_Panel.SetActive(false);
+                    }
+                    else
+                    {
+                        BuffUseYN.instance.ATKEnabled(false);
+                        BuffUseYN.instance.DEFEnabled(false);
+                        uiManager.description_Button_Panel.SetActive(true);
+                    }
+                    break;    
+                default:
+                    BuffUseYN.instance.ATKEnabled(false);
+                    BuffUseYN.instance.DEFEnabled(false);
+                    uiManager.description_Button_Panel.SetActive(true);
+                    break;
+            }
+
         }
 
         private string PrepareDescription(InventoryItem inventoryItem)
@@ -113,6 +154,8 @@ namespace Inventory
             {
                 OnOffInGameMenu();  // 게임 메뉴 열기, 닫기
             }
+
+
         }
 
         public void OnOffInvenPage()    // 인벤토리 페이지 열기

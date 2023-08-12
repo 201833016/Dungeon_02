@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] public GameObject[] subMenuBtn;
+    public GameObject[] subMenuBtn;
     [SerializeField] private InventorySO inventorySO;
     [SerializeField] public GameObject UIInventoryPage;
-
+    [SerializeField] private Health health; // 효과 대상이 될 플레이어
     private int AcceptItemNum;  // 아이템UI의 순번 받아오는 변수
     private UIInventoryPage ItemSlotNum;  // 인벤토리에서 클릭한 아이템 순번 변수
+    public GameObject description_Button_Panel; // 버프 아이템 사용시 버리기/사용하기 숨기기
+    
+    
 
     private void Start()
     {
@@ -86,10 +89,34 @@ public class UIManager : MonoBehaviour
         IItemAction itemAction = inventoryItem.item as IItemAction;
         if (itemAction != null)
         {
-            itemAction.PerformAction(gameObject, inventoryItem.itemState);  // 해당 값만큼 사용
+            switch (inventoryItem.item.item_type)
+            {
+                case "ATK":     // ATK 아이템 사용시
+                    //basebuff.onATK = true;
+                    description_Button_Panel.SetActive(false);
+                    BuffUseYN.instance.DEFEnabled(false);
+                    BuffUseYN.instance.ATKEnabled(true);
+                    
+                    BuffManager.instance.onATK = true;
+                    break;
+                case "DEF":     // DEF 아이템 사용시
+                    //basebuff.onATK = true;
+                    description_Button_Panel.SetActive(false);
+                    BuffUseYN.instance.ATKEnabled(false);
+                    BuffUseYN.instance.DEFEnabled(true);
+                    BuffManager.instance.onDEF = true;
+                    break;
+                default:
+                    description_Button_Panel.SetActive(true);
+                    BuffUseYN.instance.ATKEnabled(false);
+                    BuffUseYN.instance.DEFEnabled(false);
+                    
+                    break;
+            }
+            itemAction.PerformAction(health, inventoryItem.itemState);  // 해당 값만큼 사용
+            Debug.Log($"5. 종류 : {inventoryItem.item.item_type}");
 
-
-            Debug.Log($"{inventoryItem.itemState} 만큼 사용");
+            //Debug.Log($"{inventoryItem.itemState} 만큼 사용");
         }
     }
 }

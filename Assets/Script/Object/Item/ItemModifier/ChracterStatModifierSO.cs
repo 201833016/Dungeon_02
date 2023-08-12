@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class ChracterStatModifierSO : ScriptableObject
 {
-    public abstract void AffectCharacter(GameObject character, float val);  // 캐릭터 상태 추상 클래스 
+    public abstract void AffectCharacter(Health health, float val);  // 캐릭터 상태 추상 클래스 
 }

@@ -33,7 +33,7 @@ namespace Inventory.Model
                     while (quantity > 0 && IsInvenFull() == false)
                     {
                         quantity -= AddItemToFirstFreeSlot(item, 1, itemState); // 개수 1개 감소
-
+                        
                     }
 
                 }
@@ -83,10 +83,12 @@ namespace Inventory.Model
                     {
                         inventoryItems[i] = inventoryItems[i].ChangeQuantity(inventoryItems[i].item.maxStackSize);
                         quantity -= amountPossibleToTake;
+                        Debug.Log($"2.종류 : {item.item_type}");
                     }
                     else
                     {
                         inventoryItems[i] = inventoryItems[i].ChangeQuantity(inventoryItems[i].quantity + quantity);
+                        Debug.Log($"3.종류 : {item.item_type}");
                         InformAboutChange();
                         return 0;
                     }

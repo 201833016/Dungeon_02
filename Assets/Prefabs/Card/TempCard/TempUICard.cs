@@ -18,12 +18,12 @@ public class TempUICard : MonoBehaviour, IPointerClickHandler
     // 내부 대리자 선언
     // 아이템 클릭시, 아이템 드래그 놓기, 드래그 시작, 드래그 종료, 마우스 우측 클릭
 
-    private bool empty = true;  // 아이템이 itemUI에 있는가를 확인
+    //private bool empty = true;  // 아이템이 itemUI에 있는가를 확인
 
     private void Awake()
     {
-        TempResetCard();
-        TempDeselect();
+        TempResetCard();    // 카드 이미지 비활성화
+        TempDeselect();     // 카드 선택 효과 비화성화
     }
 
     public void TempDeselect()  // 선택 효과 비활성화
@@ -34,7 +34,7 @@ public class TempUICard : MonoBehaviour, IPointerClickHandler
     public void TempResetCard()
     {
         this.cardImage.gameObject.SetActive(false); // 인벤토리의 카드 데이터가 없어지면 비활성화
-        empty = true;
+        //empty = true;
     }
 
     public void TempSetCard(CardSO cardSO, Sprite sprite, string nametxt, string desctxt)    // 선택한 카드에 카드 데이터 가져오기
@@ -44,10 +44,10 @@ public class TempUICard : MonoBehaviour, IPointerClickHandler
         this.cardImage.sprite = sprite;
         this.cardName.text = nametxt + "";
         this.TempCardDesc.text = desctxt + "";
-        empty = false;
+        //empty = false;
     }
 
-    public void TempSelect()
+    public void TempSelect()    // 카드 선택 효과 활성화
     {
         borderImage.enabled = true; // 카드를 선택 클릭시, 선택 표시 가시화
     }

@@ -5,6 +5,6 @@ using UnityEngine;
 
 public abstract class CardStatModifierSO : ScriptableObject
 {
-    public abstract void AffectCharater(Player player, float val);  // 카드 효과 추상 클래스 
+    public abstract void AffectCharater(Health player, int val);  // 카드 효과 추상 클래스 
 
 }

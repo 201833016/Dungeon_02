@@ -8,7 +8,7 @@ public class TempDrawSystem : MonoBehaviour
     public CardSO tempTest; // 선택한 카드 정보
     public int selectNum;   // 선택한 카드의 리스트 순서 번호
     [SerializeField] private TempCardSelectPageSO cardSelectData; // 카드 선택 효과를 위한 정보
-    [SerializeField] private Player player; // 카드 효과 대상이 될 플레이어
+    [SerializeField] private Health health; // 카드 효과 대상이 될 플레이어
     public void DarwCard()
     {
         if (tempTest != null)
@@ -45,7 +45,7 @@ public class TempDrawSystem : MonoBehaviour
         ICardAction cardAction = cardEEE.card as ICardAction;   // 카드 효과 이벤트
         if(cardAction != null)
         {
-            cardAction.PerformAction(player);   // 플레이어 대상으로 카드 효과 발동
+            cardAction.PerformAction(health);   // 플레이어 대상으로 카드 효과 발동
         }
     }
     

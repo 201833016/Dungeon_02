@@ -9,6 +9,11 @@ public class BlessCardController : MonoBehaviour
 
     [SerializeField] private BlessCardInven cardData;   // 축복 카드 인벤토리 정보
     [SerializeField] private InventoryController inventoryController;   // 메뉴에서 아이템 인벤을 닫기 위한 
+    StatController statController;
+    private void Awake()
+    {
+        statController = GetComponent<StatController>();
+    }
 
     private void Start()
     {
@@ -21,13 +26,7 @@ public class BlessCardController : MonoBehaviour
         bCardUI.InitializeBlessCardUI(cardData.invenCards.Count);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            OnOffCardMenu();
-        }
-    }
+
 
     public void OnOffCardMenu() // 축복 카드 인벤토리 열기, 닫기
     {
@@ -35,10 +34,11 @@ public class BlessCardController : MonoBehaviour
         {
             bCardUI.Show();
             inventoryController.invenUI.Hide(); // 아이템 인벤토리 안보이게
+            statController.statUI.Hide();
             foreach (var card in cardData.GetCurrentBlessCardState())
             {
                 bCardUI.UpdateCardData(card.Key, card.Value.card.cardImage, card.Value.card.cardName, card.Value.card.cardDescription);
-                
+
             }
         }
         else

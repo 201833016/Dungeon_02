@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - item: {fileID: 0}
-    weight: 50
-  - item: {fileID: 11400000, guid: 4417547d509d03349a3c06c86b7bdde2, type: 2}
-    weight: 35
-  - item: {fileID: 11400000, guid: 14242f0d7f9fd86478c0721e5c6ca601, type: 2}
-    weight: 15
+    weight: 25
+  - item: {fileID: 452199953735402717, guid: 212d87961d340e5478340b9172c43d3b, type: 3}
+    weight: 25
+  - item: {fileID: 452199953735402717, guid: d4d9671ebff14244fb06ef1d38290324, type: 3}
+    weight: 25
+  - item: {fileID: 452199953735402717, guid: 6d2d518a09946514cb5c59d8f6505af8, type: 3}
+    weight: 25

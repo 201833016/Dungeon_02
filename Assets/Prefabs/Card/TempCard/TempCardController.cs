@@ -16,6 +16,7 @@ public class TempCardController : MonoBehaviour
         PrepareSelectCardUI();
     }
 
+
     private void CardShuffle()  // 시작하면 덱 리스트에서 카드 섞기
     {
         TempCardSelectPageSO cardShffle = ScriptableObject.CreateInstance<TempCardSelectPageSO>();  // 스크립트 오브젝트 인스턴스화
@@ -35,7 +36,7 @@ public class TempCardController : MonoBehaviour
 
     private void PrepareSelectCardUI()  // 시작시 카드 선택할 갯수, 이벤트 생성
     {
-        cardUI.InitializeTempCardUI(selectData.Size);   
+        cardUI.InitializeTempCardUI(selectData.Size);
         this.cardUI.OnCardDataRequested += HandleCardDataRequest;   // 카드 선택한거 가져오기
     }
 
@@ -50,30 +51,29 @@ public class TempCardController : MonoBehaviour
         cardUI.UpDateSelectDescription(index, card, card.cardImage, card.cardName, card.cardDescription);
         drawCard.tempTest = selectCard.card;    // 선택한 카드 SO정보 넘기기
         drawCard.selectNum = index; // 선택한 카드 순서 번호 넘기기
-
-        
     }
 
 
-    private void Update()
+
+    public void OpenCardPage()
     {
-        if (Input.GetKeyDown(KeyCode.L))    // L누르면 카드 선택 페이지 나오게
+        if (cardUI.isActiveAndEnabled == false)
         {
-            if (cardUI.isActiveAndEnabled == false)
+            CardShuffle();
+            //cardUI.CardPageShow();
+            foreach (var card in selectData.GetCurrentTempCardState())
             {
-                CardShuffle();
                 cardUI.CardPageShow();
-                foreach (var card in selectData.GetCurrentTempCardState())
-                {
-                    cardUI.TempUpdateCardData(card.Key, card.Value.card, card.Value.card.cardImage, card.Value.card.cardName, card.Value.card.cardDescription);
-                }
-            }
-            else
-            {
-                cardUI.CardPageHide();
+                cardUI.TempUpdateCardData(card.Key, card.Value.card, card.Value.card.cardImage, card.Value.card.cardName, card.Value.card.cardDescription);
             }
         }
+        else
+        {
+            cardUI.CardPageHide();
+        }
+
     }
+
 
     private List<T> ShuffleList<T>(List<T> _list)   // SO내의 카드 섞기
     {

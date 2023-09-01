@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: SelectCardPanel_Temp
   m_EditorClassIdentifier: 
   cardSelects:
-  - card: {fileID: 11400000, guid: a40107404cdb8df48b4064b1986b5eb1, type: 2}
-  - card: {fileID: 11400000, guid: 4f73f4feb4b99c84cbad3783d6b49fc4, type: 2}
-  - card: {fileID: 11400000, guid: 6fc8219c50661854fba55acb1a410c2a, type: 2}
-  - card: {fileID: 11400000, guid: f9a1d9211473409459113941d4df5fff, type: 2}
-  - card: {fileID: 11400000, guid: cfe276b60d14a1b4b9ae71f366fc1ff6, type: 2}
+  - card: {fileID: 11400000, guid: d1a49608e6a236f4d9eb6b8d2bb2630d, type: 2}
+  - card: {fileID: 11400000, guid: 827ed8fef2816294bb8105dfe20e6e74, type: 2}
+  - card: {fileID: 11400000, guid: d6c43ceead147274bbfc9c491b5f3430, type: 2}
+  - card: {fileID: 11400000, guid: 4b791b978dc94b1469c27b23542c980c, type: 2}
   <Size>k__BackingField: 3

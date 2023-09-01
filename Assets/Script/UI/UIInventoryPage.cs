@@ -55,7 +55,7 @@ namespace Inventory.UI
         private void HandleShowItemActions(UIInventoryItem item)    // ㅏ아이템 우클릭시
         {
             int index = listofUIItems.IndexOf(item);    // 드래그 하려는 아이템의 순서를 아이템 리스트에서 가져옴 
-            if(index == -1)
+            if (index == -1)
             {
                 return;
             }
@@ -106,7 +106,7 @@ namespace Inventory.UI
         public void Show()  // 인벤토리 보이기
         {
             gameObject.SetActive(true);
-            ResetSelection();   // 아이템UI 선택 초기화
+            //ResetSelection();   // 아이템UI 선택 초기화
 
         }
         public void Hide()  // 인벤토리 숨기기
@@ -130,6 +130,7 @@ namespace Inventory.UI
         public void ResetSelection()    // 아이템UI 선택 초기화
         {
             itemDescription.ResetDescription(); // 아이템 설명창 비활성화
+            BuffUseYN.instance.AllEnabledFalse();   // 버프 아이템 시간 비활성화
             DeselectAllItems(); // 아이템 미선택시 비활성화 
         }
 
@@ -147,7 +148,7 @@ namespace Inventory.UI
             DeselectAllItems(); // 아이템 미선택시 비활성화
             listofUIItems[itemIndex].Select();  // 해당 아이템 선택 클릭시, 선택 표시 가시화
             selectItemSlotNum = itemIndex;  // 아이템리스트 순서 번호 가져오기
-            Debug.Log($"{selectItemSlotNum}이 번호");
+            //Debug.Log($"{selectItemSlotNum}이 번호");
         }
 
         internal void ResetAllItems()   // 선택 상태 초기화

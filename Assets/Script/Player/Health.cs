@@ -27,18 +27,35 @@ public class Health : ScriptableObject     // SO로 만들어서 Player 전용�
     public void AddHP(float heal) // 회복 아이템 사용시
     {
         currentHP += heal;
+        Player.Instance.playerHPBar.UpdateHPBar(currentHP, maxHP);
+        Player.Instance.PlayerStateUpdate();
     }
 
     public void AddMaxHealth(float item_HP)
     {
         maxHP += item_HP;
+        Player.Instance.PlayerStateUpdate();
     }
 
-    public void AddAttack(float item_Attack) // 공격력 증가 아이템 사용시
+    public void AddAttack(float item_Attack) // 공격력 증가 축복 습득시
     {
         attack += item_Attack;
+        Player.Instance.PlayerStateUpdate();
     }
 
+    public void AddDefence(float item_Defence) // 방어력 증가 축복 습득시
+    {
+        defence += item_Defence;
+        Player.Instance.PlayerStateUpdate();
+    }
+
+    public void AddSpeedMove(float item_Speed)  // 이동속도 증가 축복 습득시
+    {
+        speedMove += item_Speed;
+        Player.Instance.PlayerStateUpdate();
+    }
+
+    /*
     public void Reduce(float damage)  // 체력 감소 시
     {
         currentHP -= damage;
@@ -47,7 +64,7 @@ public class Health : ScriptableObject     // SO로 만들어서 Player 전용�
         {
             Die();
         }
-    }
+    }*/
     /*
         private void CreateHitFeedback()
         {

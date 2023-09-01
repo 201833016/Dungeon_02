@@ -10,9 +10,6 @@ namespace Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private GameObject inGameMenu;    // 게임 메뉴
-        private bool isOnOff;      // 게임메뉴 On Off 확인
-
         public UIInventoryPage invenUI;   // 인벤토리 메뉴
         [SerializeField] private InventorySO inventorySO;   // 인벤토리 정보
         public List<InventoryItem> initialItems = new List<InventoryItem>();    // 인벤토리내 아이템 정보 리스트
@@ -20,7 +17,10 @@ namespace Inventory
         [SerializeField] private UIManager uiManager;   // uiManager 정보
         [SerializeField] private BlessCardController blessCardController;   // 축복 카드 인벤토리 스크립트
 
-
+        StatController statController;
+        private void Awake() {
+            statController = GetComponent<StatController>();
+        }
 
         private void Start()
         {
@@ -71,7 +71,7 @@ namespace Inventory
             ItemSO itemSO = inventoryItem.item;
             string description = PrepareDescription(inventoryItem);
             invenUI.UpdateDescription(itemIndex, itemSO.itemSprite, itemSO.itemName, description);  // 아이템UI 정보 초기화
-            Debug.Log($"4.종류 : {itemSO.item_type}");
+            //Debug.Log($"4.종류 : {itemSO.item_type}");
             
             switch (itemSO.item_type)
             {
@@ -85,8 +85,7 @@ namespace Inventory
                     }
                     else
                     {
-                        BuffUseYN.instance.ATKEnabled(false);
-                        BuffUseYN.instance.DEFEnabled(false);
+                        BuffUseYN.instance.AllEnabledFalse();
                         uiManager.description_Button_Panel.SetActive(true);
                     }
                     break;
@@ -99,14 +98,13 @@ namespace Inventory
                     }
                     else
                     {
-                        BuffUseYN.instance.ATKEnabled(false);
-                        BuffUseYN.instance.DEFEnabled(false);
+                        BuffUseYN.instance.AllEnabledFalse();
                         uiManager.description_Button_Panel.SetActive(true);
+                        
                     }
-                    break;    
+                    break;
                 default:
-                    BuffUseYN.instance.ATKEnabled(false);
-                    BuffUseYN.instance.DEFEnabled(false);
+                    BuffUseYN.instance.AllEnabledFalse();
                     uiManager.description_Button_Panel.SetActive(true);
                     break;
             }
@@ -148,22 +146,19 @@ namespace Inventory
             uiManager.UseItem(itemIndex);   // 인벤토리에서 아이템 사용 요청
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                OnOffInGameMenu();  // 게임 메뉴 열기, 닫기
-            }
-
-
-        }
 
         public void OnOffInvenPage()    // 인벤토리 페이지 열기
         {
             if (invenUI.isActiveAndEnabled == false)
             {
                 invenUI.Show();
+                if (invenUI.isActiveAndEnabled == false)
+                {
+                    invenUI.Show();
+                }
+                invenUI.ResetSelection();   // 아이템UI 선택 초기화
                 blessCardController.bCardUI.Hide();
+                statController.statUI.Hide();
                 foreach (var item in inventorySO.GetCurrentInventoryState())
                 {
                     invenUI.UpDateData(item.Key, item.Value.item.itemSprite, item.Value.quantity);   // 인벤토리 아이템 데이터 상시 업데이트
@@ -175,20 +170,5 @@ namespace Inventory
             }
         }
 
-        private void OnOffInGameMenu()  // 인게임 메뉴 개폐
-        {
-            if (isOnOff == false)   // 메뉴 열기
-            {
-                inGameMenu.SetActive(true); // 메뉴 활성화
-                OnOffInvenPage();
-                isOnOff = true;
-            }
-            else    // 메뉴 닫기
-            {
-                inGameMenu.SetActive(false);    // 메뉴 비활성화
-                OnOffInvenPage();
-                isOnOff = false;
-            }
-        }
     }
 }

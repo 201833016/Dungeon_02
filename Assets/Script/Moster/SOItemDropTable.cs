@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Inventory.Model;
 
 [CreateAssetMenu(fileName = "Drop table", menuName = "Not need/Drop Table")]
 public class SOItemDropTable : ScriptableObject
@@ -9,13 +10,13 @@ public class SOItemDropTable : ScriptableObject
     [System.Serializable]
     public class Items
     {
-        public SOItem item;
+        public GameObject item;
         public int weight;
     }
 
     public List<Items> items = new List<Items>();
 
-    protected SOItem PickItem()
+    private GameObject PickItem()
     {
         int sum = 0;
         foreach(var item in items)
@@ -45,6 +46,6 @@ public class SOItemDropTable : ScriptableObject
         {
             return;
         }
-        Instantiate(item.prefab, pos, Quaternion.identity);     // 위치에 아이템 드랍
+        Instantiate(item, pos, Quaternion.identity);     // 위치에 아이템 드랍
     }
 }

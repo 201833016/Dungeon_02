@@ -7,47 +7,157 @@ public class Player : MonoBehaviour
     public static Player Instance { get; private set; }
     Rigidbody2D rigid;
     //public int speedPlayer;   // 플레이어 이동 속도 
-    private Vector2 speedVec;   // 가속도
+    public Movement2D movement2D;
+    //private Vector2 speedVec;   // 가속도
+    [SerializeField] private MinimapPos miniPoint;    // 미니 맵 표시
+    SpriteRenderer spriteRenderer;
+    public bool isHurt;
 
-    private float currnetHeath, maxHealth, attackPlayer, defencePlayer, speedPlayer, speedAttackPlayer;
-    public Health health;   // 피격을 위한 클래스
+    public float currnetHeath, maxHealth, attackPlayer, defencePlayer, speedPlayer, speedAttackPlayer;
+    public Health health;
+    public PlayerHPBar playerHPBar;
+    public Animator animator;
+    private ParticleSystem breakParticel;   // 사망시 파괴 파티클  
 
+    float x, y;
     private void Awake()
     {
         Instance = this;
         rigid = GetComponent<Rigidbody2D>();
         rigid.freezeRotation = true;
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        movement2D = GetComponent<Movement2D>();
+        breakParticel = GetComponentInChildren<ParticleSystem>();
+
         PlayerStateUpdate();
+        playerHPBar.UpdateHPBar(currnetHeath, maxHealth);
     }
 
     private void Update()
     {
-        speedVec = Vector2.zero;    // 가속도 초기화
-        if (Input.GetKey(KeyCode.W))
+        x = Input.GetAxisRaw("Horizontal");
+        y = Input.GetAxisRaw("Vertical");
+
+        bool xDown = Input.GetButtonDown("Horizontal");
+        bool xUp = Input.GetButtonUp("Horizontal");
+
+        bool yDown = Input.GetButtonDown("Vertical");
+        bool yUp = Input.GetButtonUp("Vertical");
+
+
+        // 애니메이션
+        if (animator.GetInteger("hAxisRaw") != x)
         {
-            speedVec.y += speedPlayer;
+            animator.SetBool("isChange", true);
+            animator.SetInteger("hAxisRaw", (int)x);
         }
-        if (Input.GetKey(KeyCode.A))
+        else if (animator.GetInteger("vAxisRaw") != y)
         {
-            speedVec.x -= speedPlayer;
+            animator.SetBool("isChange", true);
+            animator.SetInteger("vAxisRaw", (int)y);
         }
-        if (Input.GetKey(KeyCode.S))
+        else
         {
-            speedVec.y -= speedPlayer;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            speedVec.x += speedPlayer;
+            animator.SetBool("isChange", false);
         }
 
-        GetComponent<Rigidbody2D>().velocity = speedVec;    // 스피드 저장
 
-        if (Input.GetKeyDown(KeyCode.U))
+    }
+
+    private void FixedUpdate()
+    {
+        movement2D.MoveTo(new Vector3(x, y, 0));
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Maps")) // 맵 이동시, 바닥을 밟으면
         {
-            health.Reduce(2);
-            PlayerStateUpdate();
+            string roomName = other.transform.parent.name;  // 넘어간 맵의 이름 알기
+            int miniTest;
+            Debug.Log($"이름: {roomName}");
+            switch (roomName)
+            {
+                // 문 1개 미니맵
+                case "Map_B(Clone)":
+                    miniTest = 0;
+                    miniPoint.MinimapOne(miniTest);
+                    break;
+                case "Map_L(Clone)":
+                    miniTest = 1;
+                    miniPoint.MinimapOne(miniTest);
+                    break;
+                case "Map_R(Clone)":
+                    miniTest = 2;
+                    miniPoint.MinimapOne(miniTest);
+                    break;
+                case "Map_T(Clone)":
+                    miniTest = 3;
+                    miniPoint.MinimapOne(miniTest);
+                    break;
+
+                // 문 2개 미니맵
+                case "Map_LB(Clone)":
+                    miniTest = 0;
+                    miniPoint.MinimapTwo(miniTest);
+                    break;
+                case "Map_LR(Clone)":
+                    miniTest = 1;
+                    miniPoint.MinimapTwo(miniTest);
+                    break;
+                case "Map_TL(Clone)":
+                    miniTest = 2;
+                    miniPoint.MinimapTwo(miniTest);
+                    break;
+                case "Map_RB(Clone)":
+                    miniTest = 3;
+                    miniPoint.MinimapTwo(miniTest);
+                    break;
+                case "Map_TR(Clone)":
+                    miniTest = 4;
+                    miniPoint.MinimapTwo(miniTest);
+                    break;
+                case "Map_TB(Clone)":
+                    miniTest = 5;
+                    miniPoint.MinimapTwo(miniTest);
+                    break;
+
+                case "ClosedRoom(Clone)":
+                    miniPoint.MinimapPointClose();
+                    break;
+                default:
+                    Debug.Log("기본 맵");
+                    break;
+            }
+        }
+
+    }
+
+    public void Reduce(float damage)  // 체력 감소 시
+    {
+        if (!isHurt)
+        {
+            float real_damage = damage - defencePlayer;
+            if (real_damage > 0)
+            {
+                health.currentHP -= real_damage;
+                breakParticel.Play();   // 파티클 실행
+                isHurt = true;
+                StartCoroutine(HurtRoutine());
+                StartCoroutine(AlphaBlink());
+            }
+        }
+
+        //CreateHitFeedback();
+        PlayerStateUpdate();
+        playerHPBar.UpdateHPBar(currnetHeath, maxHealth);
+        if (currnetHeath <= 0)
+        {
+            Debug.Log("사망");
+            health.currentHP = health.maxHP;
         }
     }
+
 
     public void PlayerStateUpdate()  // 플레이어 상태 업데이트
     {
@@ -57,8 +167,35 @@ public class Player : MonoBehaviour
         defencePlayer = health.defence; // 방어력
         speedPlayer = health.speedMove;   // 이동 속도
         speedAttackPlayer = health.speedAttack; // 공격 속도
+
+        movement2D.moveSpeed = health.speedMove; // 이동 속도 가져오기
     }
+    /*
+    IEnumerator ForceRange(Vector2 targetPos)
+    {
+        Vector2 ti = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        Vector2 dir = ti - targetPos;
+        //Vector2 dir = new Vector2(Random.Range(-1f, 1f), Random.Range(-1, 1f));
+        rigid.AddForce(dir * 1f, ForceMode2D.Impulse);   // Rigid에서 LinearDrag(공기 저항)으 1 주기
+        yield return null;
 
+    }*/
+    IEnumerator HurtRoutine()   // 피격 효과 시간
+    {
+        yield return new WaitForSeconds(0.5f);
+        isHurt = false;
+    }
+    IEnumerator AlphaBlink()    // 피격시 깜빡임
+    {
+        while (isHurt)
+        {
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = new Color(1, 1, 1, 0);
 
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        }
+        spriteRenderer.color = new Color(1, 1, 1, 1);
+    }
 
 }

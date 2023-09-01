@@ -9,6 +9,9 @@ public class TempDrawSystem : MonoBehaviour
     public int selectNum;   // 선택한 카드의 리스트 순서 번호
     [SerializeField] private TempCardSelectPageSO cardSelectData; // 카드 선택 효과를 위한 정보
     [SerializeField] private Health health; // 카드 효과 대상이 될 플레이어
+    [SerializeField] private UICardPage cardUI; // 선택할 카드 페이지 
+
+
     public void DarwCard()
     {
         if (tempTest != null)
@@ -17,6 +20,7 @@ public class TempDrawSystem : MonoBehaviour
             saveCardData.TestAddCard(tempTest, 1);  // 카드 인벤토리에 선택한 카드 넣기
             CardEffectAction(); // 카드 효과 발동
             RemoveCardInList(); // 선택한 카드를 덱 리스트에서 제거
+            cardUI.CardPageHide();
         }
         else
         {

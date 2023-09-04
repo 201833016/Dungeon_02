@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class TestRoomTemplates : MonoBehaviour
-{
-    
+public class TestRoomTemplates : MonoBehaviour  // 오브젝트 : TestRoomTemplates
+{    
     public GameObject[] bottomRooms;
     public GameObject[] topRooms;
     public GameObject[] leftRooms;
@@ -22,7 +21,7 @@ public class TestRoomTemplates : MonoBehaviour
 
     public GameObject boss;
 
-    [HideInInspector] public Vector3 instZero;  // 보스 처리시 신상 등장
+    //[HideInInspector] public Vector3 instZero;  // 보스 처리시 신상 등장
 
     private void Update() {
         if (waittime <= 0f && spawnedBoss == false)
@@ -31,7 +30,7 @@ public class TestRoomTemplates : MonoBehaviour
             Debug.Log($"보스방 이름: {rooms[rooms.Count -1].name}"); // 보스가 놓일 Room을 부모로 삼기위한 확인
             boss.transform.parent = rooms[rooms.Count -1].transform;    // 보스가 놓일 Room에 Boss 오브젝트 넣기
 
-            instZero = rooms[rooms.Count -1].transform.position;
+            //instZero = rooms[rooms.Count -1].transform.position;
             spawnedBoss = true; // 보스 출현 확인
         }
         else
@@ -51,7 +50,15 @@ public class TestRoomTemplates : MonoBehaviour
     }
     
     private void LateUpdate() {
-        distText.text = $"보스와의 거리: {dist.ToString("F0")}";
+        if (dist >= 300)
+        {
+            distText.text = $"보스와의 거리: 0";
+        }
+        else
+        {
+            distText.text = $"보스와의 거리: {dist.ToString("F0")}";
+        }
+        
     }
 
 }

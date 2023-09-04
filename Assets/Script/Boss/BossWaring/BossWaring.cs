@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossWaring : MonoBehaviour
+public class BossWaring : MonoBehaviour // 오브젝트 : BossRoom - Floor
 {
-    private bool isAttacking = false;   // 플레이어 감지            
+    private bool isAttacking = false;   // 플레이어 감지
+    [SerializeField] Boss boss;
     Player player;   // 플레이어 오브젝트
     Vector3 playerPos;  // 플레이어 위치
     Vector3 whereToAtk; // 소환할 위치
@@ -14,19 +15,39 @@ public class BossWaring : MonoBehaviour
     Transform shoadow_trans;
 
     //bool player_Attack = false; // 플레이어에게의 공격이 끊기지 않기 위해
-    //bool playerIn = false;  // 플레이어가 해당 방에 있는지 확인
-    MapPlayerIn playerCheck;
+    bool playerIn = false;  // 플레이어가 해당 방에 있는지 확인
+    private MovePoint check;
+    
+    //MapPlayerIn playerCheck;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        playerCheck = GetComponent<MapPlayerIn>();
+        check = GameObject.FindGameObjectWithTag("MapFollwed").GetComponent<MovePoint>();
     }
     private void Update()
     {
-        if (playerCheck.PlayerIn && playerCheck.BossIn)
-        { 
-            playerPos = player.transform.position;
-            StartCoroutine("BeforeAttack");
+        playerPos = player.transform.position;
+        if (playerIn && boss.BossIn)
+        {
+            StartCoroutine(PlayerTime());
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerIn = true;
+        }
+
+    }
+
+    
+    IEnumerator PlayerTime()
+    {
+        if (!check.playerArriveCheck)
+        {
+            yield return new WaitForSeconds(2.0f);
+            StartCoroutine(BeforeAttack());
         }
     }
 
@@ -67,7 +88,7 @@ public class BossWaring : MonoBehaviour
         if (shadow_Sprite.color.a >= 1.0f)
         {
             Destroy(obj);
-            StartCoroutine("Attack");
+            StartCoroutine(Attack());
         }
     }
 }

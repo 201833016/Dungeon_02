@@ -25,7 +25,7 @@ public class RandomMonster : MonoBehaviour
 
     public void RandomSpawn()
     {
-        RandomNum = Random.Range(0, 3);
+        RandomNum = Random.Range(0, 4);
             switch (RandomNum)
             {
                 case 0:
@@ -39,6 +39,11 @@ public class RandomMonster : MonoBehaviour
                     sumonMonster = Instantiate(monster[RandomNum], spawnPos.position, Quaternion.identity);   // 총알 clone생성 (이미지, 발사위치, 회전)
                     sumonMonster.transform.SetParent(monsterObj.transform, true);
                     break;
+                case 2:
+                    // Debug.Log("MoveShoot 소환");
+                    sumonMonster = Instantiate(monster[RandomNum], spawnPos.position, Quaternion.identity);
+                    sumonMonster.transform.SetParent(monsterObj.transform, true);
+                    break;                
                 default:
                     // Debug.Log("땡, 몬스터 소환 실패");
                     break;

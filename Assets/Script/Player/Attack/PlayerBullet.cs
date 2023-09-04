@@ -35,6 +35,10 @@ public class PlayerBullet : MonoBehaviour
                     // MonsterCanon
                     ray.collider.GetComponent<Canon>().GetHit(bulletDamage);
                     break;
+                case "Monster_C":
+                    // MonsterCanon
+                    ray.collider.GetComponent<MonsterC>().GetHit(bulletDamage);
+                    break;                    
                 case "Boss":
                     ray.collider.GetComponent<Boss>().Reduce(bulletDamage);
                     break;

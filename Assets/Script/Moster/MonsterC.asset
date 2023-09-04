@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb980ab95caa21b468db6352f8fadddb, type: 3}
-  m_Name: Player Original Heatlth
+  m_Script: {fileID: 11500000, guid: 0dfc289fb1ae25142b9bf54d7943a439, type: 3}
+  m_Name: MonsterC
   m_EditorClassIdentifier: 
-  maxHP: 1000
-  currentHP: 1000
-  attack: 120
-  defence: 40
-  speedMove: 5
-  speedAttack: 5
+  STR: 7
+  END: 2
+  AGI: 5
+  CON: 120
+  itemDropTable: {fileID: 11400000, guid: 791423c80abf62d43aaf8f42071bb530, type: 2}

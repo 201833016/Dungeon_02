@@ -13,10 +13,5 @@ public class TestDestroyer : MonoBehaviour
             // 해당 tag를 제외한 나머지만 지우기
             Destroy(other.gameObject);  
         }
-        /*
-        if (other.CompareTag("ClosedRoom"))
-        {
-            Destroy(other.gameObject);
-        }*/
     }
 }

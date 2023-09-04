@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Canon
   m_EditorClassIdentifier: 
   STR: 10
+  END: 2
   AGI: 5
   CON: 100
   itemDropTable: {fileID: 11400000, guid: 791423c80abf62d43aaf8f42071bb530, type: 2}

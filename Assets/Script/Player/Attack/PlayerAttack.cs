@@ -6,6 +6,7 @@ public class PlayerAttack : MonoBehaviour
 {
     Player player;
     public GameObject bullet;   // 발사체
+    public GameObject Three_bullet;   // 발사체
     public Transform AttackPosition;    // 발사위치
     public float cooltime;  // 발사간격
     private float curtime;  // 현재 시간
@@ -23,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
         Vector2 len = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;    // 마우스 좌표값을 월드 좌표로 변경 , 그후 플레이어 좌표 감산
         z = Mathf.Atan2(len.y, len.x) * Mathf.Rad2Deg;    // 파티고라스 공식, 대각선 각도 구하기
         transform.rotation = Quaternion.Euler(0, 0, z);   // 계산한 각도 가져와서, 초기화
-        PlayerViewPoint();
+        PlayerViewPoint();  // 클릭한 방향 체크
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -34,37 +35,32 @@ public class PlayerAttack : MonoBehaviour
         {
             if (!check.playerArriveCheck)
             {
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0))    // 마우스 좌 클릭
                 {
-                    
                     switch (playerView)
                     {
                         case "left_Shoot": // 왼쪽
                             player.animator.SetBool("isShoot", true);
                             player.animator.SetBool("isShooting", true);    // 총 사용중 달리기 모션 안뜨기
                             player.animator.SetInteger("ShootNum", 1);
-                            //player.movement2D.moveSpeed = 5f;  // 총 쏘는중 속도 줄이기
                             transform.localPosition = new Vector3(-1f, 0.5f, 1f);   // 총알 나오는 위치
                             break;
                         case "right_Shoot": // 오른쪽
                             player.animator.SetBool("isShoot", true);
                             player.animator.SetBool("isShooting", true);    // 총 사용중 달리기 모션 안뜨기
                             player.animator.SetInteger("ShootNum", 2);
-                            //player.movement2D.moveSpeed = 5f;  // 총 쏘는중 속도 줄이기
                             transform.localPosition = new Vector3(1f, 0.5f, 1f);   // 총알 나오는 위치
                             break;
                         case "up_Shoot": // 위
                             player.animator.SetBool("isShoot", true);
                             player.animator.SetBool("isShooting", true);    // 총 사용중 달리기 모션 안뜨기
                             player.animator.SetInteger("ShootNum", 3);
-                            //player.movement2D.moveSpeed = 5f;  // 총 쏘는중 속도 줄이기
                             transform.localPosition = new Vector3(0f, 1.5f, 1f);   // 총알 나오는 위치
                             break;
                         case "down_Shoot": // 아래
                             player.animator.SetBool("isShoot", true);
                             player.animator.SetBool("isShooting", true);    // 총 사용중 달리기 모션 안뜨기
                             player.animator.SetInteger("ShootNum", 4);
-                            //player.movement2D.moveSpeed = 5f;  // 총 쏘는중 속도 줄이기
                             transform.localPosition = new Vector3(0f, 0f, 1f);   // 총알 나오는 위치
                             break;
 
@@ -72,6 +68,7 @@ public class PlayerAttack : MonoBehaviour
                             break;
                     }
                     Instantiate(bullet, AttackPosition.position, transform.rotation);   // 마우스 좌표로 공격
+
                 }
                 curtime = cooltime;
             }
@@ -115,6 +112,18 @@ public class PlayerAttack : MonoBehaviour
             //Debug.Log("왼쪽");
             playerView = "left_Shoot";
         }
+    }
+
+    public void MultiBullet()
+    {
+        GameObject test_bullet = Instantiate(Three_bullet, AttackPosition.position, transform.rotation);   // 마우스 좌표로 공격
+        Transform[] childs = test_bullet.GetComponentsInChildren<Transform>(); //총알 묶음에서 자식을 가져옴
+
+        for (int i = 1; i < childs.Length; i += 2) //각 총알의 부모-자식 관계를 끊어줌
+        {
+            childs[i].parent = null;
+        }
+        Destroy(test_bullet); //총알을 묶고 있던 빈 오브젝트를 삭제
     }
 
 

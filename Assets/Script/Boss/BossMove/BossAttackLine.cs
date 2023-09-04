@@ -36,8 +36,8 @@ public class BossAttackLine : MonoBehaviour
             {
                 NowAttack = true;
             }
-
             bossPhase.StartFiring(AttackType.CircleFire);
+            
         }
     }
 
@@ -53,4 +53,5 @@ public class BossAttackLine : MonoBehaviour
             bossPhase.StopFiring(AttackType.CircleFire);
         }
     }
+
 }

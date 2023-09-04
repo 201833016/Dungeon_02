@@ -164,6 +164,7 @@ MonoBehaviour:
   speedPlayer: 0
   speedAttackPlayer: 0
   health: {fileID: 11400000, guid: 924239d2b9ac53b4593d266d219794d8, type: 2}
+  originalHealth: {fileID: 11400000, guid: 122cdd27f0d6d6a4eae92b952c264dac, type: 2}
   playerHPBar: {fileID: 0}
   animator: {fileID: 0}
 --- !u!114 &5988348216249980171
@@ -291,6 +292,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 892168562820703019, guid: 8a1aff2c289f63e4d82289485d3c71f2, type: 3}
+  Three_bullet: {fileID: 2915582157712261831, guid: da09092fce1b9cb4d8053573d0e9b2e8,
+    type: 3}
   AttackPosition: {fileID: 5988348217511181650}
   cooltime: 0.3
 --- !u!1001 &9075414547682019709

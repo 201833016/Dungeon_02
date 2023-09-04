@@ -5,7 +5,7 @@ using System.Linq;
 using Inventory.Model;
 
 [CreateAssetMenu(fileName = "Drop table", menuName = "Not need/Drop Table")]
-public class SOItemDropTable : ScriptableObject
+public class SOItemDropTable : ScriptableObject // 몬스터 드랍 테이블
 {
     [System.Serializable]
     public class Items
@@ -46,6 +46,7 @@ public class SOItemDropTable : ScriptableObject
         {
             return;
         }
-        Instantiate(item, pos, Quaternion.identity);     // 위치에 아이템 드랍
+        GameObject itemDrop =  Instantiate(item, pos, Quaternion.identity);     // 위치에 아이템 드랍
+
     }
 }

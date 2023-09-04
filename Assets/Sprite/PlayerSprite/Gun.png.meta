@@ -146,7 +146,7 @@ TextureImporter:
         width: 154
         height: 83
       alignment: 9
-      pivot: {x: 0.5, y: 0}
+      pivot: {x: 0.65, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -164,10 +164,10 @@ TextureImporter:
         serializedVersion: 2
         x: 559
         y: 197
-        width: 175
+        width: 177
         height: 82
       alignment: 9
-      pivot: {x: 0.5, y: 0}
+      pivot: {x: 0.65, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -204,12 +204,12 @@ TextureImporter:
       name: Gun_4
       rect:
         serializedVersion: 2
-        x: 312
+        x: 313
         y: 76
-        width: 154
+        width: 153
         height: 82
       alignment: 9
-      pivot: {x: 0.5, y: 0}
+      pivot: {x: 0.35, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -230,7 +230,7 @@ TextureImporter:
         width: 175
         height: 82
       alignment: 9
-      pivot: {x: 0.5, y: 0}
+      pivot: {x: 0.35, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

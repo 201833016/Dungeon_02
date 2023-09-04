@@ -11,7 +11,8 @@ public class Canon : MonoBehaviour
     MovePoint check;
     public SOMonster soMonster; // 몬스터 정보
     private TestLevel testLevel;    // 스테이지 레벨
-    private ParticleSystem breakParticel;   // 사망시 파괴 파티클  
+    [SerializeField] private DestructImpact destructImpact;
+    //private ParticleSystem breakParticel;   // 사망시 파괴 파티클  
     private SpriteRenderer sprite;  // 사망시 이미지 비활성화
     private BoxCollider2D bxCollider;   // 사망시 콜라이더 충돌 안되게
     private bool dieCheck;  // 파티클 실해을 위한 총알 발사 금지
@@ -27,7 +28,7 @@ public class Canon : MonoBehaviour
         check = GameObject.FindGameObjectWithTag("MapFollwed").GetComponent<MovePoint>();
         testLevel = GameObject.Find("TestLevel").GetComponent<TestLevel>();
         monsterHPBar = GetComponentInChildren<MonsterHPSlider>();
-        breakParticel = GetComponentInChildren<ParticleSystem>();
+        //breakParticel = GetComponentInChildren<ParticleSystem>();
         sprite = GetComponent<SpriteRenderer>();
         bxCollider = GetComponent<BoxCollider2D>();
     }
@@ -79,13 +80,15 @@ public class Canon : MonoBehaviour
 
     IEnumerator Break()
     {
-        breakParticel.Play();   // 파티클 실행
+        //breakParticel.Play();   // 파티클 실행
         sprite.enabled = false;
         bxCollider.enabled = false; 
+        destructImpact.DeathImpact();
         dieCheck = true;
         GameObject canvas = gameObject.transform.GetChild(2).gameObject;    // HP바 안보이게
         canvas.SetActive(false);
-        yield return new WaitForSeconds(breakParticel.main.startLifetime.constantMax);  // 파티클 실행 동안 잠시
+        //yield return new WaitForSeconds(breakParticel.main.startLifetime.constantMax);  // 파티클 실행 동안 잠시
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "Player Heatlth", menuName = "Player/Health")]
-public class Health : ScriptableObject     // SO로 만들어서 Player 전용으로
+public class Health : ScriptableObject     // Player 스테이터스
 {
     public float maxHP;    //최대 체력
     public float currentHP;   //  현재 체력
@@ -13,10 +13,6 @@ public class Health : ScriptableObject     // SO로 만들어서 Player 전용�
     public float speedMove;   // 이동 속도
     public float speedAttack; // 공격 속도
 
-    //[SerializeField] private GameObject bloodParticle;
-
-    //[SerializeField] private Renderer renderer;
-    //[SerializeField] private float flashTime = 0.2f;
 
     private void Awake()
     {
@@ -27,6 +23,10 @@ public class Health : ScriptableObject     // SO로 만들어서 Player 전용�
     public void AddHP(float heal) // 회복 아이템 사용시
     {
         currentHP += heal;
+        if (currentHP >= maxHP)
+        {
+            currentHP = maxHP;  // 회복 오버 되면, 최대치 까지
+        }
         Player.Instance.playerHPBar.UpdateHPBar(currentHP, maxHP);
         Player.Instance.PlayerStateUpdate();
     }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CameraFading;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour     // 오브젝트 : Player
 {
     public static Player Instance { get; private set; }
     Rigidbody2D rigid;
@@ -13,12 +14,13 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
     public bool isHurt;
 
-    public float currnetHeath, maxHealth, attackPlayer, defencePlayer, speedPlayer, speedAttackPlayer;
+    [HideInInspector] public float currnetHeath, maxHealth, attackPlayer, defencePlayer, speedPlayer, speedAttackPlayer;
     public Health health;
     public PlayerHPBar playerHPBar;
+
     public Animator animator;
     private ParticleSystem breakParticel;   // 사망시 파괴 파티클  
-
+    private TestLevel testLevel;    // 스테이지 레벨
     float x, y;
     private void Awake()
     {
@@ -29,9 +31,20 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         movement2D = GetComponent<Movement2D>();
         breakParticel = GetComponentInChildren<ParticleSystem>();
+        testLevel = GameObject.Find("TestLevel").GetComponent<TestLevel>();
 
+        if (testLevel.level == 1)   // 게임 시작시 상태 초기화
+        {
+            health.maxHP = 1000f;
+            health.currentHP = 1000f;
+            health.attack = 120f;
+            health.defence = 40f;
+            health.speedMove = 5f;
+            health.speedAttack = 5f;
+        }
         PlayerStateUpdate();
         playerHPBar.UpdateHPBar(currnetHeath, maxHealth);
+
     }
 
     private void Update()
@@ -61,7 +74,6 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("isChange", false);
         }
-
 
     }
 
@@ -155,6 +167,8 @@ public class Player : MonoBehaviour
         {
             Debug.Log("사망");
             health.currentHP = health.maxHP;
+
+            //StartCoroutine(GameOver());
         }
     }
 
@@ -170,16 +184,8 @@ public class Player : MonoBehaviour
 
         movement2D.moveSpeed = health.speedMove; // 이동 속도 가져오기
     }
-    /*
-    IEnumerator ForceRange(Vector2 targetPos)
-    {
-        Vector2 ti = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-        Vector2 dir = ti - targetPos;
-        //Vector2 dir = new Vector2(Random.Range(-1f, 1f), Random.Range(-1, 1f));
-        rigid.AddForce(dir * 1f, ForceMode2D.Impulse);   // Rigid에서 LinearDrag(공기 저항)으 1 주기
-        yield return null;
 
-    }*/
+
     IEnumerator HurtRoutine()   // 피격 효과 시간
     {
         yield return new WaitForSeconds(0.5f);
@@ -198,4 +204,11 @@ public class Player : MonoBehaviour
         spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
+    IEnumerator GameOver()
+    {
+        GameOutFade.instance.CameraFadeOut(1f); // 카메라 페으드 아웃
+        SceneMove.instance.StartFade(); // UI 오브젝트 가리기
+        yield return new WaitForSeconds(1.2f);
+        SceneMove.instance.MoveStartScene();    // 씬 이동
+    }
 }

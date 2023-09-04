@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf6aa2e024629b49bbe636aeb5dd2f6, type: 3}
   m_Name: Player Heatlth
   m_EditorClassIdentifier: 
-  maxHP: 105
-  currentHP: 60
-  attack: 10
-  defence: 5
+  maxHP: 1000
+  currentHP: 1000
+  attack: 120
+  defence: 40
   speedMove: 5
   speedAttack: 5

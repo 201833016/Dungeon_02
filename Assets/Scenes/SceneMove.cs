@@ -5,11 +5,20 @@ using UnityEngine.SceneManagement;
 using CameraFading;
 public class SceneMove : MonoBehaviour
 {
+    public static SceneMove instance;
+    private void Awake() {
+        instance = this;
+    }
     float fadeTime = 0.5f;
 
     public void MoveTestScene()
     {
         SceneManager.LoadScene("TestScene");
+    }
+
+    public void MoveStartScene()
+    {
+        SceneManager.LoadScene("StartScene");
     }
 
     public void MoveSampleScene()

@@ -19,6 +19,8 @@ TagManager:
   - Boss
   - HurdleObj
   - Box
+  - WayPoint
+  - Monster_C
   layers:
   - Default
   - TransparentFX

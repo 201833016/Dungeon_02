@@ -47,4 +47,7 @@ MonoBehaviour:
   monster:
   - {fileID: 2222373093955936595, guid: 58dd6f179aa62744d9909fd238a028bd, type: 3}
   - {fileID: 3859692454753391116, guid: ff8fce3ec179ef14c94e850a2dfb9c99, type: 3}
+  - {fileID: 8202693639248232783, guid: 4ea4a61b2a0444a428d47d0ee16bbb36, type: 3}
   spawnPos: {fileID: 2761745908358380178}
+  playerCheck: {fileID: 0}
+  monsterObj: {fileID: 0}

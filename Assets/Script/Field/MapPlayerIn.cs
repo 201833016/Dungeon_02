@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MapPlayerIn : MonoBehaviour
+public class MapPlayerIn : MonoBehaviour    // 오브젝트 : (모든) Map_ - Floor
 {
+    Player player;
+    Transform pos;
     public bool PlayerIn = false;   // 플레이어가 해당 Room에 있는지
     public bool BossIn = false;
     [SerializeField] private GameObject blessBoxPrefab;
     [SerializeField] private GameObject teleportPrefab;
     [SerializeField] private GameObject monsterPrefab;
     [SerializeField] private MonsterCount monsterCount;
+
+    private void Awake() {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        pos = GameObject.Find("PlayerSpawn").GetComponent<Transform>();
+    }
     private void Start()
     {
         if (monsterPrefab != null)
@@ -32,6 +39,12 @@ public class MapPlayerIn : MonoBehaviour
             }
             
         }
+
+        if (PlayerIn && BossIn)
+        {
+            // 플레이어 보스방으로 이동
+            player.transform.position = new Vector3(pos.position.x, pos.position.y, pos.position.z);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -41,7 +54,7 @@ public class MapPlayerIn : MonoBehaviour
             PlayerIn = true;
         }
 
-        if (other.CompareTag("Boss"))
+        if (other.CompareTag("Boss"))   // 보스가 있으면. 상자 + 잡몹 삭제
         {
             BossIn = true;
             Destroy(blessBoxPrefab);
@@ -86,72 +99,4 @@ public class MapPlayerIn : MonoBehaviour
         }
         PlayerIn = true;
     }
-    /*
-    public void InCheck()
-    {
-        if (PlayerIn)   // 플레이어 있음
-        {
-            if (BossIn) // 보스 있음
-            {
-                if (monsterPrefab != null)  // 몬스터가 데이터상존재
-                {
-                    //monsterPrefab.SetActive(false);
-                    Destroy(monsterPrefab); // 보스 방에는 몬스터 오브젝트 삭제
-                    if (blessBoxPrefab != null)
-                    {
-                        Destroy(blessBoxPrefab);
-                    }
-                    teleportPrefab.SetActive(false);
-                }
-                else
-                {
-                    teleportPrefab.SetActive(false);
-                }
-            }
-            else if (!BossIn)
-            {
-                if (monsterPrefab != null)  // 몬스터가 있으면
-                {
-                    monsterPrefab.SetActive(true);
-                    teleportPrefab.SetActive(false);
-                    if (blessBoxPrefab != null)
-                    {
-                        blessBoxPrefab.SetActive(false);
-                    }
-
-                    if (monsterCount.monsterCount <= 0) // 몬스터가 다 사라지면
-                    {
-                        if (blessBoxPrefab != null)
-                        {
-                            blessBoxPrefab.SetActive(true);
-                        }
-                        teleportPrefab.SetActive(true);
-                    }
-                }
-                else
-                {
-                    if (blessBoxPrefab != null)
-                    {
-                        blessBoxPrefab.SetActive(true);
-                    }
-                    teleportPrefab.SetActive(true);
-                }
-
-            }
-        }
-        else    // 방에 플레이어가 없으면
-        {
-            if (monsterPrefab != null)
-            {
-                monsterPrefab.SetActive(false);
-            }
-
-            if (blessBoxPrefab != null)
-            {
-                blessBoxPrefab.SetActive(false);
-            }
-            teleportPrefab.SetActive(false);
-        }
-    }
-    */
 }
